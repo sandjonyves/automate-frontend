@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react';
-import AutomateForm from './components/automates/AutomateForm';
-import GraphViewer from './components/automates/GraphViewer';
-import AutomateLoader from './components/automates/AutomateLoader';
+import AutomateForm from '../../../components/automates/AutomateForm';
+import GraphViewer from '../../../components/automates/GraphViewer';
+import AutomateLoader from '../../../components/automates/AutomateLoader';
 
 
 const AutomataPage = () => {
