@@ -14,7 +14,7 @@ export default function AutomatesListPage() {
     const fetchAutomates = async () => {
       try {
         const response = await api.get('/api/automates/');
-         console.log(response.data)
+         console.log('sadaaaaaaaaaaaaa',response.data[2].id)
         setAutomates(response.data);
         setError('');
       } catch (err) {

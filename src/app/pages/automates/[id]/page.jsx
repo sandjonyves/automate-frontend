@@ -12,6 +12,10 @@ import { handleStateAnalysis } from '@/app/services/stateAnalysis';
 import { handleEmondage } from '@/app/services/emondage';
 import { handleEpsilonClosure } from '@/app/services/epsilonClosure';
 import { handleAFDToEpsilonAFN } from '@/app/services/afdToEpsilonAFN';
+import { handleMinimizeAFD } from '@/app/services/minimizeAFD';
+import { handleCanonizeAutomate } from '@/app/services/canonizeAutomate';
+import { handleRegexToEpsilonAFN } from '@/app/services/regexToEpsilonAFN';
+import { handleBuildAutomaton } from '@/app/services/buildAutomaton';
 import PageView from './PageView';
 
 const Page = () => {
@@ -21,12 +25,16 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [testString, setTestString] = useState('');
   const [testResult, setTestResult] = useState(null);
-
+  const [regexInput, setRegexInput] = useState('');
+  const [glushkovRegexInput, setGlushkovRegexInput] = useState('');
+  const [automatonInput,setAutomatonInput] =useState('')
   const { id } = useParams();
   const router = useRouter();
 
   useEffect(() => {
-    fetchAutomate(id, setAutomate, setGraph, setError, setIsLoading);
+    if (id) {
+      fetchAutomate(id, setAutomate, setGraph, setError, setIsLoading);
+    }
   }, [id]);
 
   return (
@@ -38,6 +46,12 @@ const Page = () => {
       testString={testString}
       testResult={testResult}
       setTestString={setTestString}
+      regexInput={regexInput}
+      automatonInput
+      setAutomatonInput
+      setRegexInput={setRegexInput}
+      glushkovRegexInput={glushkovRegexInput}
+      setGlushkovRegexInput={setGlushkovRegexInput}
       handleDelete={() => handleDelete(id, router, setError)}
       handleTestString={() => handleTestString(id, testString, setTestResult, setError)}
       handleConvertToRegex={() => handleConvertToRegex(id, setError)}
@@ -51,6 +65,10 @@ const Page = () => {
       handleEpsilonClosure={(stateName) => handleEpsilonClosure(id, stateName, setError)}
       handleFromEpsilonAFNToAFD={() => handleFromEpsilonAFNToAFD(id, setAutomate, setGraph, setError, setIsLoading)}
       handleAFDToEpsilonAFN={() => handleAFDToEpsilonAFN(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleMinimizeAFD={() => handleMinimizeAFD(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleCanonizeAutomate={() => handleCanonizeAutomate(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleRegexToEpsilonAFN={() => handleRegexToEpsilonAFN(regexInput, setAutomate, setGraph, setError, setIsLoading)}
+      handleBuildAutomaton={() => handleBuildAutomaton(glushkovRegexInput, setAutomate, setGraph, setError, setIsLoading)}
       router={router}
     />
   );

@@ -4,7 +4,7 @@ export const generateGraph = (states, transitions) => {
   // Dictionnaire de mapping "1" → "q1", si besoin
   const stateMap = {};
   for (const state of states) {
-    const match = state.match(/^q?(\d+)$/); // Match q1 ou 1
+    const match = String(state).match(/^q?(\d+)$/); // Match q1 ou 1
     if (match) {
       const num = match[1];
       stateMap[num] = state; // Ex: stateMap["1"] = "q1"

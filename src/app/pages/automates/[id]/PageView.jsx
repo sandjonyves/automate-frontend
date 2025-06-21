@@ -1,7 +1,5 @@
-"use client"
-
 import { useState } from 'react';
-import GraphViewer from '../../../components/automates/GraphViewer';
+import GraphViewer from '@/app/components/automates/GraphViewer';
 
 const PageView = ({
   automate,
@@ -11,6 +9,10 @@ const PageView = ({
   testString,
   testResult,
   setTestString,
+  regexInput,
+  setRegexInput,
+  GlushkovRegexInput,
+  setGlushkovRegexInput,
   handleDelete,
   handleTestString,
   handleConvertToRegex,
@@ -24,6 +26,10 @@ const PageView = ({
   handleEpsilonClosure,
   handleFromEpsilonAFNToAFD,
   handleAFDToEpsilonAFN,
+  handleMinimizeAFD,
+  handleCanonizeAutomate,
+  handleRegexToEpsilonAFN,
+  handleBuildAutomaton,
   router,
 }) => {
   const [stateName, setStateName] = useState('');
@@ -128,6 +134,20 @@ const PageView = ({
             </button>
 
             <button
+              onClick={handleMinimizeAFD}
+              className="w-full bg-lime-500 text-white p-2 rounded mb-2 hover:bg-lime-600 transition-colors duration-200"
+            >
+              Minimiser AFD
+            </button>
+
+            <button
+              onClick={handleCanonizeAutomate}
+              className="w-full bg-emerald-500 text-white p-2 rounded mb-2 hover:bg-emerald-600 transition-colors duration-200"
+            >
+              Canoniser Automate
+            </button>
+
+            <button
               onClick={handleStateAnalysis}
               className="w-full bg-teal-500 text-white p-2 rounded mb-2 hover:bg-teal-600 transition-colors duration-200"
             >
@@ -170,11 +190,50 @@ const PageView = ({
             </button>
 
             <button
-              onClick={handleConvertToEpsilonAFN}
+              onClick={handleAFDToEpsilonAFN}
               className="w-full bg-amber-500 text-white p-2 rounded mb-2 hover:bg-amber-600 transition-colors duration-200"
             >
               Convertir AFD en Epsilon AFN
             </button>
+
+            <div className="mt-4">
+              <h3 className="text-sm font-medium mb-2">Regex vers Epsilon AFN</h3>
+              <div className="flex">
+                <input
+                  type="text"
+                  value={regexInput}
+                  onChange={(e) => setRegexInput(e.target.value)}
+                  placeholder="Entrez une expression régulière"
+                  className="p-3 border border-gray-300 rounded mr-2 flex-1 text-base text-gray-800 bg-gray-50 focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500 transition-colors duration-200"
+                />
+                <button
+                  onClick={handleRegexToEpsilonAFN}
+                  className="bg-fuchsia-500 text-white p-2 rounded hover:bg-fuchsia-600 transition-colors duration-200"
+                >
+                  Convertir
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <h3 className="text-sm font-medium mb-2">Construire Automate (Glushkov)</h3>
+              <div className="flex flex-col gap-2">
+                <input
+                  type="text"
+                  value={GlushkovRegexInput}
+                  onChange={(e) => setGlushkovRegexInput( e.target.value )}
+                  placeholder="Nom de l'automate"
+                  className="p-3 border border-gray-300 rounded text-base text-gray-800 bg-gray-50 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200"
+                />
+            
+                <button
+                  onClick={handleBuildAutomaton}
+                  className="bg-rose-500 text-white p-2 rounded hover:bg-rose-600 transition-colors duration-200"
+                >
+                  Construire
+                </button>
+              </div>
+            </div>
 
             <div className="mt-4">
               <h3 className="text-sm font-medium mb-2">Tester une chaîne</h3>
@@ -184,7 +243,7 @@ const PageView = ({
                   value={testString}
                   onChange={(e) => setTestString(e.target.value)}
                   placeholder="Entrez une chaîne"
-                  className="p-2 border rounded mr-2 flex-1"
+                  className="p-3 border border-gray-300 rounded mr-2 flex-1 text-base text-gray-800 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
                 />
                 <button
                   onClick={handleTestString}
@@ -208,7 +267,7 @@ const PageView = ({
                   value={stateName}
                   onChange={(e) => setStateName(e.target.value)}
                   placeholder="Nom de l'état"
-                  className="p-2 border rounded mr-2 flex-1"
+                  className="p-3 border border-gray-300 rounded mr-2 flex-1 text-base text-gray-800 bg-gray-50 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-colors duration-200"
                 />
                 <button
                   onClick={() => {
