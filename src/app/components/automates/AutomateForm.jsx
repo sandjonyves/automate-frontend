@@ -459,7 +459,7 @@ const AutomateForm = ({ setAutomate }) => {
               onClick={handleSubmit} 
               className="px-12 py-4 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 text-white text-xl font-bold rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl animate-pulse"
             >
-              ✨ Créer l'Automate Magique ✨
+              ✨ Créer l'Automate ✨
             </button>
             {errors.submit && <p className="text-red-400 text-sm mt-4 animate-pulse">{errors.submit}</p>}
           </div>
