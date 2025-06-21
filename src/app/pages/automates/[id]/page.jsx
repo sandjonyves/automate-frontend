@@ -2,7 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import * as actions from './actions';
+import { fetchAutomate } from '@/app/services/fetchAutomate';
+import { handleDelete } from '@/app/services/deleteAutomate';
+import { handleTestString } from '@/app/services/testString';
+import { handleConvertToRegex } from '@/app/services/convertToRegex';
+import { handleConvertToAFD, handleCompleteAFD, handleFromEpsilonAFNToAFD } from '@/app/services/convertToAFD';
+import { handleConvertToAFN, handleConvertToEpsilonAFN, handleFromEpsilonAFN } from '@/app/services/convertToAFN';
+import { handleStateAnalysis } from '@/app/services/stateAnalysis';
+import { handleEmondage } from '@/app/services/emondage';
+import { handleEpsilonClosure } from '@/app/services/epsilonClosure';
+import { handleAFDToEpsilonAFN } from '@/app/services/afdToEpsilonAFN';
 import PageView from './PageView';
 
 const Page = () => {
@@ -17,16 +26,8 @@ const Page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    actions.fetchAutomate(id, setAutomate, setGraph, setError, setIsLoading);
+    fetchAutomate(id, setAutomate, setGraph, setError, setIsLoading);
   }, [id]);
-
-  const handleDelete = () => actions.handleDelete(id, router, setError);
-  const handleTestString = () => actions.handleTestString(id, testString, setTestResult, setError);
-  const handleConvertToRegex = () => actions.handleConvertToRegex(id, setError);
-  const handleConvertToAFD = () => actions.handleConvertToAFD(id, setAutomate, setGraph, setError, setIsLoading);
-  const handleCompleteAFD = () => actions.handleCompleteAFD(id, setAutomate, setGraph, setError, setIsLoading);
-  const handleStateAnalysis = () => actions.handleStateAnalysis(id, setError);
-  const handleEmondage = () => actions.handleEmondage(id, setAutomate, setGraph, setError, setIsLoading);
 
   return (
     <PageView
@@ -37,13 +38,19 @@ const Page = () => {
       testString={testString}
       testResult={testResult}
       setTestString={setTestString}
-      handleDelete={handleDelete}
-      handleTestString={handleTestString}
-      handleConvertToRegex={handleConvertToRegex}
-      handleConvertToAFD={handleConvertToAFD}
-      handleCompleteAFD={handleCompleteAFD}
-      handleStateAnalysis={handleStateAnalysis}
-      handleEmondage={handleEmondage}
+      handleDelete={() => handleDelete(id, router, setError)}
+      handleTestString={() => handleTestString(id, testString, setTestResult, setError)}
+      handleConvertToRegex={() => handleConvertToRegex(id, setError)}
+      handleConvertToAFD={() => handleConvertToAFD(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleCompleteAFD={() => handleCompleteAFD(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleStateAnalysis={() => handleStateAnalysis(id, setError)}
+      handleEmondage={() => handleEmondage(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleConvertToAFN={() => handleConvertToAFN(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleConvertToEpsilonAFN={() => handleConvertToEpsilonAFN(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleFromEpsilonAFN={() => handleFromEpsilonAFN(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleEpsilonClosure={(stateName) => handleEpsilonClosure(id, stateName, setError)}
+      handleFromEpsilonAFNToAFD={() => handleFromEpsilonAFNToAFD(id, setAutomate, setGraph, setError, setIsLoading)}
+      handleAFDToEpsilonAFN={() => handleAFDToEpsilonAFN(id, setAutomate, setGraph, setError, setIsLoading)}
       router={router}
     />
   );

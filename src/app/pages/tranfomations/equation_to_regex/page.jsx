@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import api from '../../../lib/axios';
+import api from '@/app/lib/axios';
 
 
 const RegexFromEquationsPage = () => {
