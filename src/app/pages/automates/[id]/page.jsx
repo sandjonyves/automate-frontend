@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
@@ -16,6 +16,7 @@ import { handleMinimizeAFD } from '@/app/services/minimizeAFD';
 import { handleCanonizeAutomate } from '@/app/services/canonizeAutomate';
 import { handleRegexToEpsilonAFN } from '@/app/services/regexToEpsilonAFN';
 import { handleBuildAutomaton } from '@/app/services/buildAutomaton';
+import { handleComplement } from '@/app/services/complement'; // Ajout de l'import
 import PageView from './PageView';
 
 const Page = () => {
@@ -27,7 +28,7 @@ const Page = () => {
   const [testResult, setTestResult] = useState(null);
   const [regexInput, setRegexInput] = useState('');
   const [glushkovRegexInput, setGlushkovRegexInput] = useState('');
-  const [automatonInput,setAutomatonInput] =useState('')
+  const [automatonInput, setAutomatonInput] = useState('');
   const { id } = useParams();
   const router = useRouter();
 
@@ -47,8 +48,8 @@ const Page = () => {
       testResult={testResult}
       setTestString={setTestString}
       regexInput={regexInput}
-      automatonInput
-      setAutomatonInput
+      automatonInput={automatonInput}
+      setAutomatonInput={setAutomatonInput}
       setRegexInput={setRegexInput}
       glushkovRegexInput={glushkovRegexInput}
       setGlushkovRegexInput={setGlushkovRegexInput}
@@ -69,6 +70,7 @@ const Page = () => {
       handleCanonizeAutomate={() => handleCanonizeAutomate(id, setAutomate, setGraph, setError, setIsLoading)}
       handleRegexToEpsilonAFN={() => handleRegexToEpsilonAFN(regexInput, setAutomate, setGraph, setError, setIsLoading)}
       handleBuildAutomaton={() => handleBuildAutomaton(glushkovRegexInput, setAutomate, setGraph, setError, setIsLoading)}
+      handleComplement={() => handleComplement(id, setAutomate, setGraph, setError, setIsLoading)} // Ajout de la prop
       router={router}
     />
   );

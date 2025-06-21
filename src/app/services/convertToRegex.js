@@ -7,6 +7,6 @@ export const handleConvertToRegex = async (id, setError) => {
     console.log(`Expression régulière : ${response.data.regex}`);
     setError('');
   } catch (err) {
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion en regex.');
+    setError(err.response?.data.error);
   }
 };

@@ -6,7 +6,7 @@ export const handleDelete = async (id, router, setError) => {
       await api.delete(`/api/automata/${id}/`);
       router.push('/automates');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Erreur lors de la suppression.');
+      setError(err.response?.data.error || 'Erreur lors de la suppression.');
     }
   }
 };

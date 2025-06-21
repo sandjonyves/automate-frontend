@@ -9,6 +9,6 @@ export const handleStateAnalysis = async (id, setError) => {
     setError('');
   } catch (err) {
     console.error('State analysis error:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de l\'analyse des états.');
+    setError(err.response?.data.error );
   }
 };

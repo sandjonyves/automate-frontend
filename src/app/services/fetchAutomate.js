@@ -35,7 +35,7 @@ export const fetchAutomate = async (id, setAutomate, setGraph, setError, setIsLo
     setError('');
   } catch (err) {
     console.error('Fetch error:', err.response?.data || err.message); // Debug log
-    setError(err.response?.data?.detail || 'Erreur lors du chargement de l\'automate.');
+    setError(err.response?.data.error );
   } finally {
     setIsLoading(false);
   }

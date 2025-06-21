@@ -12,7 +12,7 @@ export const handleConvertToAFN = async (id, setAutomate, setGraph, setError, se
     setError('');
   } catch (err) {
     console.error('Conversion to AFN error:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion en AFN.');
+    setError(err.response?.data.error);
   } finally {
     setIsLoading(false);
   }
@@ -56,8 +56,9 @@ export const handleConvertToEpsilonAFN = async (id, setAutomate, setGraph, setEr
     //   setError('Conversion annulée.');
     // }
   } catch (err) {
-    console.error('Erreur Epsilon AFN:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion en AFN avec epsilon.');
+    
+    console.error('Erreur Epsilon AFN:', err.message);
+    setError(err.response?.data.error );
   } finally {
     setIsLoading(false);
   }
@@ -92,7 +93,7 @@ export const handleFromEpsilonAFN = async (id, setAutomate, setGraph, setError, 
     setGraph(generateGraph(data.states, fixedTransitions));
   } catch (err) {
     console.error('Erreur de conversion depuis Epsilon AFN:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion depuis Epsilon AFN.');
+    setError( err.response?.data.error);
   } finally {
     setIsLoading(false);
   }

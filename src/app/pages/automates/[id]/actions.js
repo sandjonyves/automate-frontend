@@ -35,7 +35,7 @@ export const fetchAutomate = async (id, setAutomate, setGraph, setError, setIsLo
     setError('');
   } catch (err) {
     console.error('Fetch error:', err.response?.data || err.message); // Debug log
-    setError(err.response?.data?.detail || 'Erreur lors du chargement de l\'automate.');
+    setError(err.response?.data.error || 'Erreur lors du chargement de l\'automate.');
   } finally {
     setIsLoading(false);
   }
@@ -47,7 +47,7 @@ export const handleDelete = async (id, router, setError) => {
       await api.delete(`/api/automata/${id}/`);
       router.push('/automates');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Erreur lors de la suppression.');
+      setError(err.response?.data.error || 'Erreur lors de la suppression.');
     }
   }
 };
@@ -58,7 +58,7 @@ export const handleTestString = async (id, testString, setTestResult, setError) 
     setTestResult(response.data.result);
     setError('');
   } catch (err) {
-    setError(err.response?.data?.detail || 'Erreur lors du test de la chaîne.');
+    setError(err.response?.data.error || 'Erreur lors du test de la chaîne.');
   }
 };
 
@@ -69,7 +69,7 @@ export const handleConvertToRegex = async (id, setError) => {
     console.log(`Expression régulière : ${response.data.regex}`);
     setError('');
   } catch (err) {
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion en regex.');
+    setError(err.response?.data.error || 'Erreur lors de la conversion en regex.');
   }
 };
 
@@ -94,7 +94,7 @@ export const handleConvertToAFD = async (id, setAutomate, setGraph, setError, se
     setError('');
   } catch (err) {
     console.error('Conversion error:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion en AFD.');
+    setError(err.response?.data.error || 'Erreur lors de la conversion en AFD.');
   } finally {
     setIsLoading(false);
   }
@@ -124,7 +124,7 @@ export const handleCompleteAFD = async (id, setAutomate, setGraph, setError, set
     if (err.response?.status === 400 && err.response?.data?.error === 'Automaton must be deterministic (AFD).') {
       setError('L’automate n’est pas déterministe (AFN).');
     } else {
-      setError(err.response?.data?.detail || 'Erreur lors de la complétion de l\'AFD.');
+      setError(err.response?.data.error || 'Erreur lors de la complétion de l\'AFD.');
     }
   } finally {
     setIsLoading(false);
@@ -140,7 +140,7 @@ export const handleStateAnalysis = async (id, setError) => {
     setError('');
   } catch (err) {
     console.error('State analysis error:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de l\'analyse des états.');
+    setError(err.response?.data.error || 'Erreur lors de l\'analyse des états.');
   }
 };
 
@@ -165,7 +165,7 @@ export const handleEmondage = async (id, setAutomate, setGraph, setError, setIsL
     setError('');
   } catch (err) {
     console.error('Emondage error:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de l\'émondage de l\'automate.');
+    setError(err.response?.data.error || 'Erreur lors de l\'émondage de l\'automate.');
   } finally {
     setIsLoading(false);
   }
@@ -194,7 +194,7 @@ export const handleConvertToAFN = async (id, setAutomate, setGraph, setError, se
     setError('');
   } catch (err) {
     console.error('Conversion to AFN error:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion en AFN.');
+    setError(err.response?.data.error || 'Erreur lors de la conversion en AFN.');
   } finally {
     setIsLoading(false);
   }
@@ -239,7 +239,7 @@ export const handleConvertToEpsilonAFN = async (id, setAutomate, setGraph, setEr
     }
   } catch (err) {
     console.error('Erreur Epsilon AFN:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion en AFN avec epsilon.');
+    setError(err.response?.data.error || 'Erreur lors de la conversion en AFN avec epsilon.');
   } finally {
     setIsLoading(false);
   }
@@ -314,7 +314,7 @@ export const handleFromEpsilonAFN = async (id, setAutomate, setGraph, setError, 
     setGraph(generateGraph(data.states, fixedTransitions));
   } catch (err) {
     console.error('Erreur de conversion depuis Epsilon AFN:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion depuis Epsilon AFN.');
+    setError(err.response?.data.error || 'Erreur lors de la conversion depuis Epsilon AFN.');
   } finally {
     setIsLoading(false);
   }
@@ -329,7 +329,7 @@ export const handleEpsilonClosure = async (id, stateName, setError) => {
     setError('');
   } catch (err) {
     console.error('Epsilon closure error:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors du calcul de la fermeture epsilon.');
+    setError(err.response?.data.error || 'Erreur lors du calcul de la fermeture epsilon.');
   }
 };
 
@@ -363,7 +363,7 @@ export const handleFromEpsilonAFNToAFD = async (id, setAutomate, setGraph, setEr
     setError('');
   } catch (err) {
     console.error('Erreur de conversion Epsilon AFN vers AFD:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion d\'Epsilon AFN en AFD.');
+    setError(err.response?.data.error || 'Erreur lors de la conversion d\'Epsilon AFN en AFD.');
   } finally {
     setIsLoading(false);
   }

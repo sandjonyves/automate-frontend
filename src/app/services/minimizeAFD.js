@@ -33,7 +33,7 @@ export const handleMinimizeAFD = async (id, setAutomate, setGraph, setError, set
     if (err.response?.status === 400 && err.response?.data?.error === 'Automaton must be deterministic (AFD).') {
       setError('L’automate n’est pas déterministe (AFN).');
     } else {
-      setError(err.response?.data?.detail || 'Erreur lors de la minimisation de l\'AFD.');
+      setError(err.response?.data.error );
     }
   } finally {
     setIsLoading(false);

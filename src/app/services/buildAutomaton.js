@@ -36,7 +36,7 @@ export const handleBuildAutomaton = async (regex, setAutomate, setGraph, setErro
     // }
   } catch (err) {
     console.error('Erreur construction automate:', err.response?.data || err.message);
-    setError(err.response?.data?.error || 'Erreur lors de la construction de l\'automate.');
+    setError(err.response?.data.error);
   } finally {
     setIsLoading(false);
   }

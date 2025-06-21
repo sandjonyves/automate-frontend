@@ -30,7 +30,7 @@ export const handleCanonizeAutomate = async (id, setAutomate, setGraph, setError
     setError('');
   } catch (err) {
     console.error('Erreur de canonisation:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la canonisation de l\'automate.');
+    setError(err.response?.data.error);
   } finally {
     setIsLoading(false);
   }

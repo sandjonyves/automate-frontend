@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import GraphViewer from '@/app/components/automates/GraphViewer';
 
@@ -31,6 +32,7 @@ const PageView = ({
   handleRegexToEpsilonAFN,
   handleBuildAutomaton,
   router,
+  handleComplement, // Ajout de la prop
 }) => {
   const [stateName, setStateName] = useState('');
 
@@ -38,16 +40,6 @@ const PageView = ({
     return (
       <div className="container mx-auto p-4 text-center">
         <p className="text-gray-500">Chargement...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="container mx-auto p-4">
-        <div className="p-4 bg-red-100 rounded">
-          <p className="text-red-500">{error}</p>
-        </div>
       </div>
     );
   }
@@ -62,7 +54,13 @@ const PageView = ({
 
   return (
     <div className="container mx-auto p-4">
+      {error && (
+        <div className="p-4 mb-4 text-lg text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+          {error}
+        </div>
+      )}
       <h1 className="text-2xl font-bold mb-6">{automate.name}</h1>
+
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Section gauche : Visualisation */}
         <div className="lg:w-2/3">
@@ -196,6 +194,13 @@ const PageView = ({
               Convertir AFD en Epsilon AFN
             </button>
 
+            <button
+              onClick={handleComplement} // Ajout du bouton
+              className="w-full bg-rose-500 text-white p-2 rounded mb-2 hover:bg-rose-600 transition-colors duration-200"
+            >
+              Complément
+            </button>
+
             <div className="mt-4">
               <h3 className="text-sm font-medium mb-2">Regex vers Epsilon AFN</h3>
               <div className="flex">
@@ -221,11 +226,10 @@ const PageView = ({
                 <input
                   type="text"
                   value={GlushkovRegexInput}
-                  onChange={(e) => setGlushkovRegexInput( e.target.value )}
+                  onChange={(e) => setGlushkovRegexInput(e.target.value)}
                   placeholder="Nom de l'automate"
                   className="p-3 border border-gray-300 rounded text-base text-gray-800 bg-gray-50 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200"
                 />
-            
                 <button
                   onClick={handleBuildAutomaton}
                   className="bg-rose-500 text-white p-2 rounded hover:bg-rose-600 transition-colors duration-200"

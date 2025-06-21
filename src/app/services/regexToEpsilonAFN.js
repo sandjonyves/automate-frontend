@@ -41,7 +41,7 @@ export const handleRegexToEpsilonAFN = async (regex, setAutomate, setGraph, setE
     }
   } catch (err) {
     console.error('Erreur Regex vers Epsilon AFN:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion de la regex en Epsilon AFN.');
+    setError(err.response?.data.error );
   } finally {
     setIsLoading(false);
   }

@@ -9,6 +9,6 @@ export const handleEpsilonClosure = async (id, stateName, setError) => {
     setError('');
   } catch (err) {
     console.error('Epsilon closure error:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors du calcul de la fermeture epsilon.');
+    setError(err.response?.data.error );
   }
 };

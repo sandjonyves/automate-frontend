@@ -6,6 +6,6 @@ export const handleTestString = async (id, testString, setTestResult, setError) 
     setTestResult(response.data.result);
     setError('');
   } catch (err) {
-    setError(err.response?.data?.detail || 'Erreur lors du test de la chaîne.');
+    setError(err.response?.data.error );
   }
 };

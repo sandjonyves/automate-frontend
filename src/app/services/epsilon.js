@@ -9,7 +9,7 @@ export const handleEpsilonClosure = async (id, stateName, setError, setResult) =
     setError('');
   } catch (err) {
     console.error('Erreur fermeture ε:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors du calcul de la fermeture epsilon.');
+    setError(err.response?.data.error );
     setResult('');
   }
 };

@@ -78,7 +78,7 @@ const RegexFromEquationsPage = () => {
       setResult(response.data.expression_reguliere);
       setErrors({});
     } catch (err) {
-      setError(err.response?.data?.detail || 'Erreur lors de la génération de l\'expression régulière.');
+      setError(err.response?.data.error || 'Erreur lors de la génération de l\'expression régulière.');
     }
   };
 

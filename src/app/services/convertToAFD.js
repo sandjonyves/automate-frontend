@@ -29,7 +29,7 @@ export const handleConvertToAFD = async (id, setAutomate, setGraph, setError, se
    
   } catch (err) {
     console.error('Conversion error:', err.response?.data || err.message);
-    setError(err.message);
+    setError(err.response?.data.error);
   } finally {
     setIsLoading(false);
   }
@@ -78,7 +78,7 @@ export const handleCompleteAFD = async (id, setAutomate, setGraph, setError, set
     if (err.response?.status === 400 && err.response?.data?.error === 'Automaton must be deterministic (AFD).') {
       setError('L’automate n’est pas déterministe (AFN).');
     } else {
-      setError(err.response?.data?.detail || 'Erreur lors de la complétion de l\'AFD.');
+      setError(err.response?.data.error || 'Erreur lors de la complétion de l\'AFD.');
     }
   } finally {
     setIsLoading(false);
@@ -115,7 +115,7 @@ export const handleFromEpsilonAFNToAFD = async (id, setAutomate, setGraph, setEr
     setError('');
   } catch (err) {
     console.error('Erreur de conversion Epsilon AFN vers AFD:', err.response?.data || err.message);
-    setError(err.response?.data?.detail || 'Erreur lors de la conversion d\'Epsilon AFN en AFD.');
+    setError(err.response?.data.error);
   } finally {
     setIsLoading(false);
   }
