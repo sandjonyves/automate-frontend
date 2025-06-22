@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* :root {
+:root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -12,15 +12,32 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dégradé de fond pour toute l'application */
+html {
+  background: linear-gradient(to bottom right, #312e81, #581c87, #831843);
+  min-height: 100vh;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-} */
+  background: linear-gradient(to bottom right, #312e81, #581c87, #831843);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Pour s'assurer que le dégradé couvre toute la page même avec du contenu qui dépasse */
+#__next {
+  background: linear-gradient(to bottom right, #312e81, #581c87, #831843);
+  min-height: 100vh;
+}
+
+/* Alternative pour les applications avec un root différent */
+#root {
+  background: linear-gradient(to bottom right, #312e81, #581c87, #831843);
+  min-height: 100vh;
+}
+
+select, option {
+  color: black !important;
+  background-color: white !important;
+}
