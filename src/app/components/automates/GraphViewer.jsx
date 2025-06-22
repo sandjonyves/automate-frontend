@@ -29,11 +29,13 @@ const GraphViewer = ({ graph, automate }) => {
           },
           color: {
             background: 'rgba(6,4,0,1)',
-            border: isInitial
-              ? '#10B981'           // 🟢 bordure verte
+            border: isInitial && isFinal
+              ? 'white' //  vert et 🔴 rouge🟢
+              : isInitial
+              ? '#10B981' // 🟢 bordure verte
               : isFinal
-              ? '#EF4444'           // 🔴 bordure rouge
-              : '#1E40AF'           // 🔵 bordure bleue
+              ? '#EF4444' // 🔴 bordure rouge
+              : '#1E40AF' // 🔵 bordure bleue
           },
           borderWidth: 3,
           shadow: {
@@ -289,6 +291,10 @@ const GraphViewer = ({ graph, automate }) => {
             <div className="flex items-center space-x-2">
               <div className="w-4 h-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full border-2 border-blue-600"></div>
               <span className="text-gray-200">État normal</span>
+            </div>
+             <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 bg-white rounded-full border-2 border-white"></div>
+              <span className="text-gray-200">État initial et final</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-1 bg-gradient-to-r from-purple-500 to-purple-600 rounded"></div>
