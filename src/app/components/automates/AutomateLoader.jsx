@@ -12,24 +12,16 @@ const AutomateLoader = ({ setAutomate, setGraph }) => {
     }
 
     try {
+      
       const response = await api.get(`/api/automata/${automateId}/`);
       const data = response.data;
       setAutomate(data);
-      setGraph({
-        nodes: data.states.map((state) => ({ id: state, label: state, shape: 'circle' })),
-        edges: Object.entries(data.transitions).flatMap(([source, trans]) =>
-          Object.entries(trans).map(([symbole, dest]) => ({
-            from: source,
-            to: Array.isArray(dest) ? dest[0] : dest, // Simplification pour la visualisation
-            label: symbole || 'ε',
-            arrows: 'to',
-          }))
-        ),
-      });
+          setAutomate(data);
+          setGraph(generateGraph(data.states, data.transitions));
       setError('');
       setAutomateId('');
     } catch (error) {
-      setError(error.response?.data?.detail || 'Erreur lors de la récupération de l\'automate.');
+      setError(error.response?.data?.error);
     }
   };
 
