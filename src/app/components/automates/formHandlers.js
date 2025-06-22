@@ -96,7 +96,7 @@ export const handleRemoveTransition = (source, symbole, formData, setFormData) =
   setFormData({ ...formData, transitions: newTransitions });
 };
 
-export const handleSubmit = async (e, formData, setAutomate, setGraph, setErrors, setIsSubmitting) => {
+export const handleSubmit = async (e, formData, setAutomate,router, setErrors, setIsSubmitting) => {
     
   e.preventDefault();
   const newErrors = {};
@@ -106,7 +106,7 @@ export const handleSubmit = async (e, formData, setAutomate, setGraph, setErrors
 //   if (!formData.states.includes(formData.initial_state)) {
 //     newErrors.initial_state = "L'état initial doit être dans la liste des états.";
 //   }
-  alert('dskjdskajdka')
+
   for (const f of formData.final_states) {
     if (!formData.states.includes(f)) {
       newErrors.final_states = `L'état final ${f} n'est pas dans la liste des états.`;
@@ -127,13 +127,16 @@ export const handleSubmit = async (e, formData, setAutomate, setGraph, setErrors
     alphabet: formData.alphabet,
     transitions: formData.transitions,
   };
-alert('dskjdskajdka')
+
   setIsSubmitting(true);
   try {
     const response = await handleCreateAutomate(payload);
-        console.log(response)
-      setAutomate(response.data);
-      setGraph(generateGraph(response.data.states, response.data.transitions));
+    
+    router.push(`/pages/automates/${response.data.id}`)
+        // console.log(response)
+    //   setAutomate(response.data);
+      
+    //   setGraph(generateGraph(response.data.states, response.data.transitions));
     //   setErrors({});
     
   } catch (error) {

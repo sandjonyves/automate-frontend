@@ -90,8 +90,9 @@ export default function AutomataPage() {
 
               {/* Boutons d'action */}
               <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Link href="/pages/automates/create">
                 <button
-                  onClick={() => setShowInterface(true)}
+                  
                   className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/50"
                 >
                   <span className="relative z-10 flex items-center gap-2">
@@ -100,7 +101,7 @@ export default function AutomataPage() {
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
-
+              </Link>
                 <Link href="/pages/automates/">
                   <button className="group relative px-8 py-4 bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white font-semibold rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-green-500/50">
                     <span className="relative z-10 flex items-center gap-2">
@@ -155,20 +156,7 @@ export default function AutomataPage() {
       
       {automate && <GraphViewer graph={graph} />}
       
-      <AutomateLoader setAutomate={(data) => {
-        setAutomate(data);
-        setGraph({
-          nodes: data.states.map((state) => ({ id: state, label: state, shape: 'circle' })),
-          edges: Object.entries(data.transitions).flatMap(([source, trans]) =>
-            Object.entries(trans).map(([symbole, dest]) => ({
-              from: source,
-              to: Array.isArray(dest) ? dest[0] : dest,
-              label: symbole || 'ε',
-              arrows: 'to',
-            }))
-          ),
-        });
-      }} />
+     
     </div>
   );
 }
