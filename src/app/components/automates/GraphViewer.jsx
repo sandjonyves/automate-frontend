@@ -6,51 +6,68 @@ const GraphViewer = ({ graph, automate }) => {
   const networkRef = useRef(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  useEffect(() => {
-    if (!graph || !graph.nodes || !graph.edges || !containerRef.current) return;
+useEffect(() => {
+  if (!graph || !graph.nodes || !graph.edges || !containerRef.current) return;
 
-    import('vis-network/standalone').then((vis) => {
-      const { Network } = vis;
+  import('vis-network/standalone').then((vis) => {
+    const { Network } = vis;
 
-      const nodes = graph.nodes.map((node) => {
-        const isInitial = automate?.initial_state === node.id;
-        const isFinal = automate?.final_states?.includes(node.id);
+    const nodes = graph.nodes.map((node) => {
+      const isInitial = automate?.initial_state === node.id;
+      const isFinal = automate?.final_states?.includes(node.id);
 
-        return {
-          id: node.id,
-          label: node.label,
-          shape: 'circle',
-          size: 50, // 🔄 Augmenté de 40 à 50
-          font: {
-            size: 18, // 🔄 Réduit de 20 à 18 pour équilibrer
-            color: '#FFFFFF',
-            face: 'Inter, sans-serif',
-            bold: true
-          },
-          color: {
-            background: 'rgba(6,4,0,1)',
-            border: isInitial && isFinal
-              ? 'white' //  vert et 🔴 rouge🟢
-              : isInitial
-              ? '#10B981' // 🟢 bordure verte
-              : isFinal
-              ? '#EF4444' // 🔴 bordure rouge
-              : '#1E40AF' // 🔵 bordure bleue
-          },
-          borderWidth: 3,
-          shadow: {
-            enabled: true,
-            color: 'rgba(0,0,0,0.3)',
-            size: 10,
-            x: 2,
-            y: 2
-          },
-          // 🆕 Marge pour éviter le chevauchement
-          margin: 20
-        };
-      });
+      return {
+        id: node.id,
+        label: node.label,
+        shape: 'circle',
+        size: 50,
+        font: {
+          size: 18,
+          color: '#FFFFFF',
+          face: 'Inter, sans-serif',
+          bold: true
+        },
+        color: {
+          background: 'rgba(6,4,0,1)',
+          border: isInitial && isFinal
+            ? 'white'
+            : isInitial
+            ? '#10B981'
+            : isFinal
+            ? '#EF4444'
+            : '#1E40AF'
+        },
+        borderWidth: 3,
+        shadow: {
+          enabled: true,
+          color: 'rgba(0,0,0,0.3)',
+          size: 10,
+          x: 2,
+          y: 2
+        },
+        margin: 20
+      };
+    });
 
-      const edges = graph.edges.map((edge, index) => ({
+    // ➕ Ajout du comptage pour éviter chevauchement
+    const edgeCountMap = {};
+    graph.edges.forEach((edge) => {
+      const key = `${edge.from}->${edge.to}`;
+      edgeCountMap[key] = (edgeCountMap[key] || 0) + 1;
+    });
+
+    const seen = {};
+
+    const edges = graph.edges.map((edge, index) => {
+      const key = `${edge.from}->${edge.to}`;
+      const count = edgeCountMap[key];
+      seen[key] = (seen[key] || 0) + 1;
+
+      const curveTypes = ['curvedCW', 'curvedCCW', 'discrete'];
+      const curveType = curveTypes[(seen[key] - 1) % curveTypes.length];
+      const roundness = 0.2 + ((seen[key] - 1) * 0.2);
+
+      return {
         id: `edge_${index}`,
         from: edge.from,
         to: edge.to,
@@ -63,9 +80,8 @@ const GraphViewer = ({ graph, automate }) => {
           }
         },
         font: {
-          size: 20, // 🔄 Augmenté de 7 à 12 pour meilleure lisibilité
+          size: 20,
           color: '#FFFFFF',
-          // background: 'rgba(0,0,0,0.8)', // 🔄 Fond plus opaque
           strokeWidth: 0,
           face: 'Inter, sans-serif',
           bold: true,
@@ -74,10 +90,10 @@ const GraphViewer = ({ graph, automate }) => {
         color: {
           color: '#A855F7'
         },
-        width: 2, // 🔄 Réduit de 3 à 2 pour moins d'encombrement
+        width: 2,
         smooth: {
-          type: 'curvedCW',
-          roundness: 0.3 // 🔄 Augmenté pour plus de courbure
+          type: curveType,
+          roundness: roundness
         },
         shadow: {
           enabled: true,
@@ -86,88 +102,74 @@ const GraphViewer = ({ graph, automate }) => {
           x: 1,
           y: 1
         }
-      }));
-
-      const data = { nodes, edges };
-
-      const options = {
-        layout: {
-          hierarchical: {
-            enabled: false // 🔄 Désactivé pour permettre une disposition plus libre
-          }
-        },
-        edges: {
-          font: { size: 12 },
-          smooth: { 
-            type: 'curvedCW', 
-            roundness: 0.3 
-          },
-          chosen: false
-        },
-        nodes: {
-          chosen: false
-        },
-        physics: {
-          enabled: true,
-          stabilization: { 
-            iterations: 200, // 🔄 Augmenté pour meilleure stabilisation
-            fit: true
-          },
-          barnesHut: {
-            gravitationalConstant: -4000, // 🔄 Réduit pour moins d'attraction
-            centralGravity: 0.1, // 🔄 Réduit pour plus d'étalement
-            springLength: 300, // 🔄 Augmenté de 200 à 300
-            springConstant: 0.02, // 🔄 Réduit pour ressorts plus souples
-            damping: 0.15, // 🔄 Augmenté pour plus de stabilité
-            avoidOverlap: 1 // 🆕 Évite le chevauchement des nœuds
-          },
-          // 🆕 Configuration pour repulsion entre nœuds
-          repulsion: {
-            nodeDistance: 150, // Distance minimale entre nœuds
-            centralGravity: 0.05,
-            springLength: 250,
-            springConstant: 0.05,
-            damping: 0.15
-          },
-          solver: 'barnesHut', // 🔄 Algorithme optimisé pour grands graphes
-          timestep: 0.35, // 🔄 Pas de temps réduit pour plus de précision
-          adaptiveTimestep: true // 🆕 Adaptation automatique
-        },
-        interaction: {
-          hover: false,
-          tooltipDelay: 0,
-          selectable: false,
-          dragNodes: false,
-          dragView: true,
-          zoomView: true
-        },
-        // 🆕 Configuration globale pour l'espacement
-        configure: {
-          enabled: false
-        }
       };
-
-      if (networkRef.current) networkRef.current.destroy();
-
-      networkRef.current = new Network(containerRef.current, data, options);
-
-      // 🆕 Ajustement automatique après stabilisation
-      networkRef.current.once('stabilizationIterationsDone', () => {
-        setTimeout(() => {
-          networkRef.current?.fit({
-            animation: { duration: 1000, easingFunction: 'easeInOutQuad' }
-          });
-        }, 100);
-      });
     });
 
-    return () => {
-      if (networkRef.current) {
-        networkRef.current.destroy();
-        networkRef.current = null;
+    const data = { nodes, edges };
+
+    const options = {
+      layout: { hierarchical: { enabled: false } },
+      edges: {
+        font: { size: 12 },
+        smooth: { type: 'curvedCW', roundness: 0.3 },
+        chosen: false
+      },
+      nodes: {
+        chosen: false
+      },
+      physics: {
+        enabled: true,
+        stabilization: {
+          iterations: 200,
+          fit: true
+        },
+        barnesHut: {
+          gravitationalConstant: -4000,
+          centralGravity: 0.1,
+          springLength: 300,
+          springConstant: 0.02,
+          damping: 0.15,
+          avoidOverlap: 1
+        },
+        solver: 'barnesHut',
+        timestep: 0.35,
+        adaptiveTimestep: true
+      },
+      interaction: {
+        hover: false,
+        tooltipDelay: 0,
+        selectable: false,
+        dragNodes: false,
+        dragView: true,
+        zoomView: true
+      },
+      configure: {
+        enabled: false
       }
     };
-  }, [graph, automate]);
+
+    if (networkRef.current) networkRef.current.destroy();
+
+    networkRef.current = new Network(containerRef.current, data, options);
+
+    networkRef.current.once('stabilizationIterationsDone', () => {
+      setTimeout(() => {
+        networkRef.current?.fit({
+          animation: { duration: 1000, easingFunction: 'easeInOutQuad' }
+        });
+      }, 100);
+    });
+  });
+
+  return () => {
+    if (networkRef.current) {
+      networkRef.current.destroy();
+      networkRef.current = null;
+    }
+  };
+}, [graph, automate]);
+
+
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);

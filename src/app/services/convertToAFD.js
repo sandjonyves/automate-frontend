@@ -40,7 +40,7 @@ export const handleCompleteAFD = async (id, setAutomate, setGraph, setError, set
     setIsLoading(true);
     const response = await api.post(`/api/automates/${id}/complete/`);
        let data = response.data;
-   
+        console.log('AFD complet:', data);
        // Ajouter un nom aléatoire si absent
       
    

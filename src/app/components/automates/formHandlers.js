@@ -165,6 +165,7 @@ export const handleSubmit = async (e, formData, setAutomate,router, setErrors, s
   }
 
   const payload = {
+    automaton_type: formData.automaton_type,
     name: formData.name,
     description: formData.description,
     states: formData.states,
