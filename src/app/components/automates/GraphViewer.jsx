@@ -65,7 +65,7 @@ const GraphViewer = ({ graph, automate }) => {
         font: {
           size: 20, // 🔄 Augmenté de 7 à 12 pour meilleure lisibilité
           color: '#FFFFFF',
-          background: 'rgba(0,0,0,0.8)', // 🔄 Fond plus opaque
+          // background: 'rgba(0,0,0,0.8)', // 🔄 Fond plus opaque
           strokeWidth: 0,
           face: 'Inter, sans-serif',
           bold: true,
@@ -214,15 +214,29 @@ const GraphViewer = ({ graph, automate }) => {
     }
   };
 
-  const exportGraph = () => {
-    if (networkRef.current) {
-      const canvas = networkRef.current.canvas.getCanvas();
-      const link = document.createElement('a');
-      link.download = `automate_${automate?.name || 'graph'}.png`;
-      link.href = canvas.toDataURL();
-      link.click();
+const exportGraph = () => {
+  if (!networkRef.current) {
+    console.error('networkRef is not available');
+    return;
+  }
+
+  try {
+    // Accéder directement au canvas de vis.js
+    const canvas = networkRef.current.canvas.frame.canvas; // Structure courante pour vis.js
+    if (!(canvas instanceof HTMLCanvasElement)) {
+      console.error('Canvas element is not valid');
+      return;
     }
-  };
+
+    const link = document.createElement('a');
+    link.download = `automate_${automate?.name || 'graph'}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    link.remove(); // Nettoyage
+  } catch (error) {
+    console.error('Error exporting graph:', error);
+  }
+};
 
   if (!graph || !graph.nodes || !graph.edges) {
     return (
@@ -253,9 +267,9 @@ const GraphViewer = ({ graph, automate }) => {
             <button onClick={resetView} className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl hover:scale-105 transition-transform">
               🎯 Centrer
             </button>
-            <button onClick={redistributeNodes} className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-xl hover:scale-105 transition-transform">
+            {/* <button onClick={redistributeNodes} className="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-xl hover:scale-105 transition-transform">
               🔄 Redistribuer
-            </button>
+            </button> */}
             <button onClick={exportGraph} className="px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-xl hover:scale-105 transition-transform">
               📸 Exporter
             </button>
