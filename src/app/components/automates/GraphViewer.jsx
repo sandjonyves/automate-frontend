@@ -65,7 +65,7 @@ const GraphViewer = ({ graph, automate }) => {
         font: {
           size: 20, // 🔄 Augmenté de 7 à 12 pour meilleure lisibilité
           color: '#FFFFFF',
-          background: 'rgba(0,0,0,0.8)', // 🔄 Fond plus opaque
+          // background: 'rgba(0,0,0,0.8)', // 🔄 Fond plus opaque
           strokeWidth: 0,
           face: 'Inter, sans-serif',
           bold: true,
