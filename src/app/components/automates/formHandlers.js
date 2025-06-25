@@ -57,20 +57,33 @@ export const handleToggleFinalState = (state, formData, setFormData) => {
       : [...formData.final_states, state],
   });
 };
-
-export const handleAddTransition = (formData, setFormData, newTransition, setNewTransition, errors, setErrors) => {
+export const handleAddTransition = (
+  formData,
+  setFormData,
+  newTransition,
+  setNewTransition,
+  errors,
+  setErrors
+) => {
   const { source, symbole, destination, isList } = newTransition;
+
   if (!source || (!symbole && symbole !== '') || !destination) return;
 
+  // Validation
   if (!formData.states.includes(source)) {
     setErrors({ ...errors, transitionSource: 'État source invalide.' });
     return;
   }
+
   if (symbole && !formData.alphabet.includes(symbole) && symbole !== 'ε') {
     setErrors({ ...errors, transitionSymbole: 'Symbole invalide.' });
     return;
   }
-  const destinations = isList ? destination.split(',').map((d) => d.trim()) : [destination];
+
+  const destinations = isList
+    ? destination.split(',').map((d) => d.trim()).filter((d) => d)
+    : [destination];
+
   for (const dest of destinations) {
     if (!formData.states.includes(dest)) {
       setErrors({ ...errors, transitionDestination: `État destination ${dest} invalide.` });
@@ -78,14 +91,38 @@ export const handleAddTransition = (formData, setFormData, newTransition, setNew
     }
   }
 
-  const newTransitions = { ...formData.transitions };
-  if (!newTransitions[source]) newTransitions[source] = {};
-  newTransitions[source][symbole || 'ε'] = isList ? destinations : destination;
+  // Merge propre des transitions existantes
+  const updatedTransitions = { ...formData.transitions };
 
-  setFormData({ ...formData, transitions: newTransitions });
-  setNewTransition({ source: '', symbole: '', destination: '', isList: false });
-  setErrors({ ...errors, transitionSource: '', transitionSymbole: '', transitionDestination: '' });
+  if (!updatedTransitions[source]) {
+    updatedTransitions[source] = {};
+  }
+
+  if (!updatedTransitions[source][symbole]) {
+    updatedTransitions[source][symbole] = [];
+  }
+
+  // Ajouter sans doublons
+  updatedTransitions[source][symbole] = Array.from(new Set([
+    ...updatedTransitions[source][symbole],
+    ...destinations
+  ]));
+
+  setFormData({
+    ...formData,
+    transitions: updatedTransitions
+  });
+
+  // Réinitialiser la transition temporaire et les erreurs
+  setNewTransition({
+    source: '',
+    symbole: '',
+    destination: '',
+    isList: false
+  });
+  setErrors({});
 };
+
 
 export const handleRemoveTransition = (source, symbole, formData, setFormData) => {
   const newTransitions = { ...formData.transitions };
@@ -131,7 +168,7 @@ export const handleSubmit = async (e, formData, setAutomate,router, setErrors, s
   setIsSubmitting(true);
   try {
     const response = await handleCreateAutomate(payload);
-    
+    console.log(response)
     router.push(`/pages/automates/${response.data.id}`)
         // console.log(response)
     //   setAutomate(response.data);

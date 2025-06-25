@@ -239,7 +239,7 @@ const PageView = ({
               </div>
             </div>
 
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <h3 className="text-sm font-medium mb-2">Tester une chaîne</h3>
               <div className="flex">
                 <input
@@ -261,7 +261,7 @@ const PageView = ({
                   {testResult ? 'Chaîne acceptée' : 'Chaîne rejetée'}
                 </p>
               )}
-            </div>
+            </div> */}
 
             <div className="mt-4">
               <h3 className="text-sm font-medium mb-2">Fermeture Epsilon</h3>

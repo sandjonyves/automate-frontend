@@ -5,6 +5,7 @@ export const handleRegexToEpsilonAFN = async (regex, setAutomate, setGraph, setE
   try {
     setIsLoading(true);
     const response = await api.post(`/api/from-regex/`, { regex });
+   
     let data = response.data;
     console.log('Epsilon AFN from Regex:', data);
 
@@ -23,8 +24,8 @@ export const handleRegexToEpsilonAFN = async (regex, setAutomate, setGraph, setE
     // const previousGraph = { ...setGraph };
 
     // Appliquer la conversion temporairement
-    setAutomate(data.automate);
-    setGraph(generateGraph(data.automate.states, data.automate.transitions));
+    setAutomate(data);
+    setGraph(generateGraph(data.states, data.transitions));
 
 
 
