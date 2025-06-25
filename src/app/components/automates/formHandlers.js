@@ -2,16 +2,26 @@
 import { handleCreateAutomate } from '@/app/services/createService';
 import { generateGraph } from '@/app/services/utils';
 
-export const handleAddSymbole = (formData, setFormData, newSymbole, setNewSymbole, errors, setErrors) => {
-  if (!newSymbole) return;
-  if (formData.alphabet.includes(newSymbole)) {
+export const handleAddSymbole = (
+  formData,
+  setFormData,
+  newSymbole,
+  setNewSymbole,
+  errors,
+  setErrors
+) => {
+  let symbole = newSymbole.trim() === '' ? 'ε' : newSymbole.trim(); // ⬅️ vide devient 'ε'
+
+  if (formData.alphabet.includes(symbole)) {
     setErrors({ ...errors, newSymbole: 'Ce symbole existe déjà.' });
     return;
   }
-  setFormData({ ...formData, alphabet: [...formData.alphabet, newSymbole] });
+
+  setFormData({ ...formData, alphabet: [...formData.alphabet, symbole] });
   setNewSymbole('');
   setErrors({ ...errors, newSymbole: '' });
 };
+
 
 export const handleRemoveSymbole = (symbole, formData, setFormData) => {
   setFormData({
@@ -65,9 +75,11 @@ export const handleAddTransition = (
   errors,
   setErrors
 ) => {
-  const { source, symbole, destination, isList } = newTransition;
+  let { source, symbole, destination, isList } = newTransition;
 
-  if (!source || (!symbole && symbole !== '') || !destination) return;
+  if (symbole === '') symbole = 'ε'; // considérer vide comme epsilon
+
+  if (!source || symbole === undefined || !destination) return;
 
   // Validation
   if (!formData.states.includes(source)) {
@@ -91,7 +103,6 @@ export const handleAddTransition = (
     }
   }
 
-  // Merge propre des transitions existantes
   const updatedTransitions = { ...formData.transitions };
 
   if (!updatedTransitions[source]) {
@@ -102,7 +113,6 @@ export const handleAddTransition = (
     updatedTransitions[source][symbole] = [];
   }
 
-  // Ajouter sans doublons
   updatedTransitions[source][symbole] = Array.from(new Set([
     ...updatedTransitions[source][symbole],
     ...destinations
@@ -113,7 +123,6 @@ export const handleAddTransition = (
     transitions: updatedTransitions
   });
 
-  // Réinitialiser la transition temporaire et les erreurs
   setNewTransition({
     source: '',
     symbole: '',
