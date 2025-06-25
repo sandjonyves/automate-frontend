@@ -6,14 +6,9 @@ export const handleConvertToAFD = async (id, setAutomate, setGraph, setError, se
     setIsLoading(true);
     const response = await api.post(`/api/automates/${id}/convert/`);
     var data = response.data.afd;
-    
-    if(!response.data.fd) {
-      console.log(response.data,1111111111111111111111111111);
-      setError(response.data.message)
-    }else{
     setAutomate(data);
     setGraph(generateGraph(data.states, data.transitions));
-    }
+   
 
     // setGraph({
     //   nodes: afdData.states.map((state) => ({ id: state, label: state, shape: 'circle' })),

@@ -1,6 +1,11 @@
 'use client';
 
+import { useEffect } from "react";
+
 const AutomateList = ({ automates, onConsult }) => {
+  useEffect(()=>{
+    {console.log(automates)}
+  },[])
   if (!automates.length) {
     return (
       <div className="text-center p-4">
@@ -12,6 +17,7 @@ const AutomateList = ({ automates, onConsult }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {automates.map((automate) => (
+        
         <div
           key={automate.id}
           className="border rounded-lg shadow-lg p-6 bg-white hover:shadow-xl transition-shadow duration-200"
