@@ -307,6 +307,7 @@ const PageView = ({
                     const state = stateName.trim();
                     if (state && automate.states.includes(state)) {
                       // alert()
+                      alert(state)
                       handleEpsilonClosure(automate.id,state,setError)
                     } else {
                       setError('Veuillez entrer un état valide.')

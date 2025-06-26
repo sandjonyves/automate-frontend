@@ -64,7 +64,7 @@ const Page = () => {
       handleConvertToAFN={() => handleConvertToAFN(id, setAutomate, setGraph, setError, setIsLoading)}
       handleConvertToEpsilonAFN={() => handleConvertToEpsilonAFN(id, setAutomate, setGraph, setError, setIsLoading)}
       handleFromEpsilonAFN={() => handleFromEpsilonAFN(id, setAutomate, setGraph, setError, setIsLoading)}
-      handleEpsilonClosure={(stateName) => handleEpsilonClosure(id, stateName, setError)}
+      handleEpsilonClosure={(id, stateName, setError) => handleEpsilonClosure(id, stateName, setError)}
       handleFromEpsilonAFNToAFD={() => handleFromEpsilonAFNToAFD(id, setAutomate, setGraph, setError, setIsLoading)}
       handleAFDToEpsilonAFN={() => handleAFDToEpsilonAFN(id, setAutomate, setGraph, setError, setIsLoading)}
       handleMinimizeAFD={() => handleMinimizeAFD(id, setAutomate, setGraph, setError, setIsLoading)}
