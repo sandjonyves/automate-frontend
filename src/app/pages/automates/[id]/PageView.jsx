@@ -95,13 +95,13 @@ const PageView = ({
         <div className="lg:w-1/3 flex flex-col gap-4">
           <div className="border rounded-lg p-4 bg-white shadow">
             <h2 className="text-lg font-semibold mb-4">Opérations</h2>
-
+{/* 
             <button
               onClick={() => router.push(`/automates/${automate.id}/edit`)}
               className="w-full bg-yellow-500 text-white p-2 rounded mb-2 hover:bg-yellow-600 transition-colors duration-200"
             >
               Modifier
-            </button>
+            </button> */}
 
             <button
               onClick={handleDelete}
