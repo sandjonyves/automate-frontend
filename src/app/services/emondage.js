@@ -6,7 +6,7 @@ export const handleEmondage = async (id, setAutomate, setGraph, setError, setIsL
     const response = await api.post(`/api/automates/${id}/emondage/`);
    
     var data = response.data; 
-    // console.log('Automate émondé:', emondedData);
+    console.log('Automate émondé:', data);
        setAutomate(data);
        setGraph(generateGraph(data.states, data.transitions));
  

@@ -43,6 +43,7 @@ const Page = () => {
       automate={automate}
       graph={graph}
       error={error}
+      setError={setError}
       isLoading={isLoading}
       testString={testString}
       testResult={testResult}
