@@ -96,7 +96,7 @@ export default function AutomatesListPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Liste des Automates</h1>
+      <h1 className="text-2xl font-bold mb-6 text-white">Liste des Automates</h1>
       <div className="mb-4 space-x-4">
         <button
           onClick={() => router.push('automates/create')}

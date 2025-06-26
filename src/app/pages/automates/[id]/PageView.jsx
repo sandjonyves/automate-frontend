@@ -163,35 +163,35 @@ const PageView = ({
               onClick={handleConvertToAFN}
               className="w-full bg-pink-500 text-white p-2 rounded mb-2 hover:bg-pink-600 transition-colors duration-200"
             >
-              Convertir en AFN
+              Convertir en AF
             </button>
 
             <button
               onClick={handleConvertToEpsilonAFN}
               className="w-full bg-blue-500 text-white p-2 rounded mb-2 hover:bg-blue-600 transition-colors duration-200"
             >
-              Convertir en Epsilon AFN
+              Convertir en Epsilon AF
             </button>
 
             <button
               onClick={handleFromEpsilonAFN}
               className="w-full bg-cyan-500 text-white p-2 rounded mb-2 hover:bg-cyan-600 transition-colors duration-200"
             >
-              Convertir depuis Epsilon AFN
+              Convertir depuis Epsilon AF
             </button>
 
             <button
               onClick={handleFromEpsilonAFNToAFD}
               className="w-full bg-violet-500 text-white p-2 rounded mb-2 hover:bg-violet-600 transition-colors duration-200"
             >
-              Convertir Epsilon AFN en AFD
+              Convertir Epsilon AF en AFD
             </button>
 
             <button
               onClick={handleAFDToEpsilonAFN}
               className="w-full bg-amber-500 text-white p-2 rounded mb-2 hover:bg-amber-600 transition-colors duration-200"
             >
-              Convertir AFD en Epsilon AFN
+              Convertir AFD en Epsilon AF
             </button>
 
             <button
@@ -202,7 +202,7 @@ const PageView = ({
             </button>
 
             <div className="mt-4">
-              <h3 className="text-sm font-medium mb-2">Regex vers Epsilon AFN</h3>
+              <h3 className="text-sm font-medium mb-2">Construire Automate (Thompson)</h3>
               <div className="flex">
                 <input
                   type="text"
@@ -215,7 +215,7 @@ const PageView = ({
                   onClick={handleRegexToEpsilonAFN}
                   className="bg-fuchsia-500 text-white p-2 rounded hover:bg-fuchsia-600 transition-colors duration-200"
                 >
-                  Convertir
+                  Construire
                 </button>
               </div>
             </div>
@@ -227,7 +227,7 @@ const PageView = ({
                   type="text"
                   value={GlushkovRegexInput}
                   onChange={(e) => setGlushkovRegexInput(e.target.value)}
-                  placeholder="Nom de l'automate"
+                  placeholder="Entrez une expression régulière"
                   className="p-3 border border-gray-300 rounded text-base text-gray-800 bg-gray-50 focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors duration-200"
                 />
                 <button
