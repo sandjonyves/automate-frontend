@@ -12,7 +12,7 @@ const AutomataPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Gestion des Automates</h1>
+      <h1 className="text-2xl text-white font-bold mb-4">Gestion des Automates</h1>
       <AutomateForm setAutomate={setAutomate} setGraph={setGraph} />
     
      

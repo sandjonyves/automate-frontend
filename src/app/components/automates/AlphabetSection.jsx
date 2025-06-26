@@ -7,7 +7,9 @@ const AlphabetSection = ({ formData, setFormData, newSymbole, setNewSymbole, err
       <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
         <span className="w-8 h-8 bg-gradient-to-r from-green-400 to-teal-400 rounded-full mr-3 flex items-center justify-center text-sm">Σ</span>
         Alphabet
+        
       </h3>
+      <span className='text-white pl-2'>Ajouter epsilon si besoin dans l'alphabet</span>
 
       <div className="flex gap-3 mb-4">
         <input
@@ -16,7 +18,7 @@ const AlphabetSection = ({ formData, setFormData, newSymbole, setNewSymbole, err
           onChange={(e) => setNewSymbole(e.target.value)}
           maxLength={10}
           className="flex-1 p-3 bg-white/10 border border-white/30 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-300"
-          placeholder="Nouveau symbole"
+          placeholder="Nouveau symbole "
         />
         <button
           type="button"

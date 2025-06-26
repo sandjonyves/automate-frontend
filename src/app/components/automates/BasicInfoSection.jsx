@@ -29,7 +29,7 @@ const BasicInfoSection = ({ formData, setFormData, errors }) => {
         />
       </div>
 
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <label className="block text-sm font-medium text-gray-200 mb-2">Type d'automate</label>
         <select
           value={formData.automaton_type}
@@ -40,7 +40,7 @@ const BasicInfoSection = ({ formData, setFormData, errors }) => {
           <option value="NFA" className="bg-gray-800">🟡 Non Déterministe (NFA)</option>
           <option value="ε-NFA" className="bg-gray-800">🔶 Epsilon-NFA (ε-NFA)</option>
         </select>
-      </div>
+      </div> */}
     </div>
   );
 };
