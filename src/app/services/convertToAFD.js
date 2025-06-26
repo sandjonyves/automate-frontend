@@ -4,8 +4,9 @@ import {generateGraph} from './utils'
 export const handleConvertToAFD = async (id, setAutomate, setGraph, setError, setIsLoading) => {
   try {
     setIsLoading(true);
-    const response = await api.post(`/api/automates/${id}/convert/`);
+    const response = await api.post(`/api/automates/${id}/afn-to-afd/`);
     var data = response.data.afd;
+    console.log(response)
     setAutomate(data);
     setGraph(generateGraph(data.states, data.transitions));
    
