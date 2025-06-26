@@ -1,6 +1,5 @@
 'use client'
-
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import api from '@/app/lib/axios';
 
 
@@ -84,12 +83,12 @@ const RegexFromEquationsPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Générer une Expression Régulière</h1>
+      <h1 className="text-2xl font-bold mb-4 text-white">Générer une Expression Régulière</h1>
 
       <form onSubmit={handleSubmit} className="mb-8">
         {/* Équations */}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Équations</label>
+          <label className="block text-sm font-medium mb-2 text-white">Équations</label>
           {equations.map((eq, index) => (
             <div key={index} className="flex mb-2 items-center">
               <input
@@ -97,14 +96,14 @@ const RegexFromEquationsPage = () => {
                 placeholder="Variable (ex: X0)"
                 value={eq.variable}
                 onChange={(e) => handleEquationChange(index, 'variable', e.target.value)}
-                className="p-2 border rounded mr-2 w-1/4"
+                className="p-2 border rounded mr-2 w-1/4 border-white placeholder-white text-white"
               />
               <input
                 type="text"
                 placeholder="Équation (ex: aX1 + bX2)"
                 value={eq.equation}
                 onChange={(e) => handleEquationChange(index, 'equation', e.target.value)}
-                className="p-2 border rounded mr-2 flex-1"
+                className="p-2 border rounded mr-2 flex-1 placeholder-white border-white text-white"
               />
               {equations.length > 1 && (
                 <button
@@ -136,13 +135,13 @@ const RegexFromEquationsPage = () => {
 
         {/* Variable initiale */}
         <div className="mb-4">
-          <label className="block text-sm font-medium">Variable initiale</label>
+          <label className="block text-sm font-medium text-white">Variable initiale</label>
           <input
             type="text"
             placeholder="Variable initiale (ex: X0)"
             value={variableInitiale}
             onChange={(e) => setVariableInitiale(e.target.value)}
-            className="mt-1 p-2 border rounded w-full"
+            className="mt-1 p-2 border rounded w-full placeholder-white border-white text-white"
           />
           {errors.variableInitiale && (
             <p className="text-red-500 text-sm">{errors.variableInitiale}</p>
@@ -158,8 +157,8 @@ const RegexFromEquationsPage = () => {
       {/* Résultat ou erreur */}
       {result && (
         <div className="mt-4 p-4  rounded">
-          <h2 className="text-lg font-semibold">Expression Régulière</h2>
-          <p>{result}</p>
+          <h2 className="text-lg font-semibold text-red-500">Expression Régulière</h2>
+          <p className='text-green-500 text-2xl'>{result}</p>
         </div>
       )}
       {error && (

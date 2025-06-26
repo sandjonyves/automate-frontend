@@ -10,6 +10,8 @@ import AutomateOperationModal from '@/app/components/AutomateOperationModal';
 import AutomateList from '@/app/components/AutomateList';
 import { generateGraph } from '@/app/services/utils';
 
+import RegexFromEquationsPage from '../tranfomations/equation_to_regex/page';
+
 export default function AutomatesListPage() {
   const [automates, setAutomates] = useState([]);
   const [error, setError] = useState('');
@@ -93,6 +95,9 @@ export default function AutomatesListPage() {
       console.error(`Error in ${operation}:`, err);
     }
   };
+  const handleNavigateToRegex=()=>{
+    router.push('./')
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -121,6 +126,13 @@ export default function AutomatesListPage() {
           className="bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 transition-colors duration-200"
         >
           CONCATÉNER
+        </button>
+        <button onClick={()=> router.push('tranfomations/equation_to_regex')} 
+        className="bg-purple-500 text-white p-2 rounded hover:bg-purple-600 transition-colors duration-200"
+          
+          >
+          
+          Equation To Regex
         </button>
       </div>
 
