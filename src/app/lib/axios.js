@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://tp-automate-latest.onrender.com',
+  baseURL:'https://tp-automate-latest.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },
